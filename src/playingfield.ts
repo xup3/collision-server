@@ -2,9 +2,8 @@ type Vec2d = {
   start: number
   end: number
 }
-
 export default class Playingfield {
-  public field: Vec2d
+  private field: Vec2d
 
   constructor(field: Vec2d) {
     this.field = field

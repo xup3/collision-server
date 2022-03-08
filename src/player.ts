@@ -6,9 +6,11 @@ type Vec2d = {
 export default class Player {
   private position: Vec2d
   private health: number = 100
+  public id: number;
 
-  constructor(position: Vec2d) {
+  constructor(position: Vec2d, id: number) {
     this.position = position
+    this.id = id
   }
 
   get currentPosition(): Vec2d {
@@ -21,6 +23,10 @@ export default class Player {
 
   get currentHealth(): number {
     return this.health
+  }
+
+  get playerId(): number {
+    return this.id
   }
 
   set currentHealth(hp: number) {
