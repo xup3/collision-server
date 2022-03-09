@@ -21,11 +21,12 @@ const player2 = new Player({x: 20, y: 20, z: 0}, 2)
 
 const playingfield = new Playingfield({start: 0, end: 1024})
 
-const game1 = new Game([player1, player2], playingfield);
+const game1 = new Game([player1, player2], playingfield)
+server1.attachGame(game1)
+
+console.log(server1.game);
 
 const collisionDetection = new Collision;
-
-console.log(game1);
 
 const projectile1 = new Projectile({x: 200, y: 100, z: 20}, 20)
 const projectile2 = new Projectile({x: 10, y: 10, z: 0}, 20)
