@@ -3,6 +3,7 @@ import Game from "./game"
 import Player from "./player"
 import Playingfield from "./playingfield"
 import Projectile from "./projectile"
+import Server from "./server"
 
 import './style.css'
 
@@ -11,6 +12,9 @@ const app = document.querySelector<HTMLDivElement>('#app')!
 app.innerHTML = `
   <h1>Game Changer!</h1>
 `
+
+const server1 = new Server();
+console.log(server1);
 
 const player1 = new Player({x: 10, y: 10, z: 0}, 1)
 const player2 = new Player({x: 20, y: 20, z: 0}, 2)
