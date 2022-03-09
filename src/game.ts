@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import Player from "./player"
 import Playingfield from "./playingfield"
+import { getRandomInt } from './helper';
 
 export default class Game {
   private players: Player[]
@@ -8,33 +9,38 @@ export default class Game {
   running: boolean = false
   paused: boolean = false
   uuid = uuidv4();
+  private roundCounter: number = 1
 
   constructor(players: Player[], playingfield: Playingfield) {
     this.players = players
     this.playingfield = playingfield
   }
 
-  getRandomInt(min: number, max: number): number {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-
-    return Math.floor(Math.random() * (max - min)) + min;
-  }
-
   loop() {
+    console.info("GAME STARTED");
+
     while(this.running) {
-      console.log("GAME IS RUNNING");
+      console.info(`ROUND ${this.roundCounter} STARTED`);
+      this.roundCounter++
 
       this.allPlayers.map(p => {
+        p.isDead && console.info(`PLAYER ${p.playerId} IS DEAD`)
+      })
+
+      this.allPlayers.map(function(p) {
         if (p.currentHealth > 0) {
-          const dmg = this.getRandomInt(0, 100)
-          p.setDamage(dmg)
-          console.log(p.playerId, p.currentHealth);
+          const randDamage = getRandomInt(0, 100);
+          console.log(randDamage);
+
+          p.setDamage(randDamage)
+
+          console.info("Player:", p.playerId, "Health: ", p.currentHealth);
         }
       })
 
       if (this.allPlayers.every(p => p.currentHealth === 0)) {
         this.stopGame()
+        console.info("ALL PLAYER DIED, GAME STOPPED")
       }
     }
   }
@@ -52,8 +58,8 @@ export default class Game {
     this.running = !this.running
     this.paused = !this.running
 
-    console.log(this.running);
-    console.log(this.paused);
+    console.info(this.running);
+    console.info(this.paused);
   }
 
   get allPlayers(): Player[] {

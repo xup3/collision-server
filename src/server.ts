@@ -18,9 +18,12 @@ export default class Server {
     this.maxPlayers = maxPlayers
     this.startUpTime = startUpTime
     this.tickrate = tickrate
+
+    console.info("SERVER STARTED")
   }
 
   attachGame(game: Game) {
     this.game = game
+    console.info("GAME ATTACHED TO SERVER")
   }
 }

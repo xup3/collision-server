@@ -7,7 +7,7 @@ type Vec3d = {
 export default class Player {
   private position: Vec3d
   private health: number = 100
-  public id: number
+  private id: number
   private ready: boolean
 
   constructor(position: Vec3d, id: number, ready: boolean = false) {
@@ -38,6 +38,10 @@ export default class Player {
 
   get playerId(): number {
     return this.id
+  }
+
+  get isDead(): boolean {
+    return this.currentHealth === 0
   }
 
   set currentHealth(hp: number) {
