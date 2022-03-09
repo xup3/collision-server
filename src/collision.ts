@@ -1,19 +1,13 @@
-type Vec2d = {
-  x: number
-  y: number
-}
+import Player from "./player"
+import Projectile from "./projectile"
 export default class Collision {
-  public coords: Vec2d
+  collisionDetection(player: Player, projectile: Projectile): boolean {
+    if (JSON.stringify(player.currentPosition) === JSON.stringify(projectile.currentPosition)) {
+      player.setDamage(projectile.damage)
 
-  constructor(coords: Vec2d) {
-    this.coords = coords
-  }
+      return true
+    }
 
-  get pos(): Vec2d {
-    return this.coords
-  }
-
-  set pos(coords: Vec2d) {
-    this.coords = coords
+    return false
   }
 }

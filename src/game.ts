@@ -1,8 +1,5 @@
+import Player from "./player"
 import Playingfield from "./playingfield"
-
-type Player = {
-  id: number
-}
 
 export default class Game {
   private players: Player[]

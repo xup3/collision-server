@@ -1,23 +1,24 @@
-type Vec2d = {
+type Vec3d = {
   x: number
-  y: number
+  y: number,
+  z: number
 }
 
 export default class Player {
-  private position: Vec2d
+  private position: Vec3d
   private health: number = 100
   public id: number;
 
-  constructor(position: Vec2d, id: number) {
+  constructor(position: Vec3d, id: number) {
     this.position = position
     this.id = id
   }
 
-  get currentPosition(): Vec2d {
+  get currentPosition(): Vec3d {
     return this.position
   }
 
-  set currentPosition(position: Vec2d) {
+  set currentPosition(position: Vec3d) {
     this.position = position
   }
 
@@ -35,5 +36,9 @@ export default class Player {
 
   setDamage(damage: number) {
     this.health -= damage
+  }
+
+  hasTakenDamage(): boolean {
+    return true
   }
 }
