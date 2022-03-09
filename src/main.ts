@@ -26,6 +26,8 @@ server1.attachGame(game1)
 
 console.log(server1.game);
 
+server1.game?.startGame();
+
 const collisionDetection = new Collision;
 
 const projectile1 = new Projectile({x: 200, y: 100, z: 20}, 20)

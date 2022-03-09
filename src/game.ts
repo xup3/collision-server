@@ -5,8 +5,8 @@ import Playingfield from "./playingfield"
 export default class Game {
   private players: Player[]
   private playingfield: Playingfield
-  gamerunning: boolean = false
-  gamepaused: boolean = false
+  running: boolean = false
+  paused: boolean = false
   uuid = uuidv4();
 
   constructor(players: Player[], playingfield: Playingfield) {
@@ -14,27 +14,46 @@ export default class Game {
     this.playingfield = playingfield
   }
 
-  async loop() {
-    while(this.gamerunning) {
+  getRandomInt(min: number, max: number): number {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+  loop() {
+    while(this.running) {
       console.log("GAME IS RUNNING");
+
+      this.allPlayers.map(p => {
+        if (p.currentHealth > 0) {
+          const dmg = this.getRandomInt(0, 100)
+          p.setDamage(dmg)
+          console.log(p.playerId, p.currentHealth);
+        }
+      })
+
+      if (this.allPlayers.every(p => p.currentHealth === 0)) {
+        this.stopGame()
+      }
     }
   }
 
   startGame(): void {
-    this.gamerunning = true
+    this.running = true
     this.loop();
   }
 
   stopGame(): void {
-    this.gamerunning = false;
+    this.running = false;
   }
 
   pauseGame(): void {
-    this.gamerunning = !this.gamerunning
-    this.gamepaused = !this.gamerunning
+    this.running = !this.running
+    this.paused = !this.running
 
-    console.log(this.gamerunning);
-    console.log(this.gamepaused);
+    console.log(this.running);
+    console.log(this.paused);
   }
 
   get allPlayers(): Player[] {
