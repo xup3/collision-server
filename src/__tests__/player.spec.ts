@@ -1,20 +1,37 @@
+import Player from "../player"
+import { getRandomInt } from "../helper"
+
 describe("Player Test Suite", () => {
   type Coords = {
     x: number,
-    y: number
+    y: number,
+    z: number
   }
 
-  test("Will detect a collision of two objects", () => {
-    const coords1: Coords = {x: 1, y: 200}
-    const coords2: Coords = {x: 1, y: 200}
+  let testPlayer: Player;
 
-    expect(coords1).toEqual(coords2)
+  beforeEach(() => {
+    testPlayer = new Player({x: 0, y: 0, z: 0}, 1);
   })
 
-  test("The coordinations will not collide", () => {
-    const coords1: Coords = {x: 1, y: 300}
-    const coords2: Coords = {x: 1, y: 200}
+  test("Player position to be at 0, 0, 0", () => {
+    const playerCoords: Coords = {x: 0, y: 0, z: 0}
+    expect(testPlayer.currentPosition).toEqual(playerCoords)
+  })
 
-    expect(coords1).not.toEqual(coords2)
+  test("Player health is at 100 when spawning", () => {
+    expect(testPlayer.currentHealth).toEqual(100)
+  })
+
+  test("Player health is at 80 when taking 20 damage", () => {
+    testPlayer.setDamage(20)
+    expect(testPlayer.currentHealth).toEqual(80)
+  })
+
+  test("Player health is at ? when taking random damage", () => {
+    const randDamage = getRandomInt(0, 100)
+
+    testPlayer.setDamage(randDamage)
+    expect(testPlayer.currentHealth).toEqual(100 - randDamage)
   })
 })

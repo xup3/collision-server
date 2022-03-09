@@ -9,39 +9,43 @@ export default class Game {
   running: boolean = false
   paused: boolean = false
   uuid = uuidv4();
-  private roundCounter: number = 1
+  private roundcounter: number = 0
+  gamerounds: number
 
-  constructor(players: Player[], playingfield: Playingfield) {
+  constructor(players: Player[], playingfield: Playingfield, gamerounds: number) {
     this.players = players
     this.playingfield = playingfield
+    this.gamerounds = gamerounds
   }
 
   loop() {
     console.info("GAME STARTED");
 
-    while(this.running) {
-      console.info(`ROUND ${this.roundCounter} STARTED`);
-      this.roundCounter++
+    while(this.running && this.gamerounds > 0) {
+      this.roundcounter++
+      console.info(`ROUND ${this.roundcounter} STARTED`);
+      this.gamerounds--
 
-      this.allPlayers.map(p => {
-        p.isDead && console.info(`PLAYER ${p.playerId} IS DEAD`)
-      })
+      this.allPlayers.map((p) => {
+        if (!p.isDead) {
+          const randDamage = getRandomInt(0, 100)
+          if (p.currentHealth - randDamage <= 0) {
+            p.currentHealth = 0;
+          } else {
+            p.setDamage(randDamage)
+          }
 
-      this.allPlayers.map(function(p) {
-        if (p.currentHealth > 0) {
-          const randDamage = getRandomInt(0, 100);
-          console.log(randDamage);
-
-          p.setDamage(randDamage)
-
-          console.info("Player:", p.playerId, "Health: ", p.currentHealth);
+          p.isDead && console.info(`PLAYER ${p.playerId} JUST DIED THIS ROUND`)
         }
       })
 
-      if (this.allPlayers.every(p => p.currentHealth === 0)) {
+      if (this.allPlayers.every(p => p.isDead)) {
         this.stopGame()
         console.info("ALL PLAYER DIED, GAME STOPPED")
+        console.info(`ROUNDS PLAYED`, this.roundcounter)
       }
+
+      console.table(this.allPlayers);
     }
   }
 
@@ -60,6 +64,10 @@ export default class Game {
 
     console.info(this.running);
     console.info(this.paused);
+  }
+
+  get remainingGamerounds(): number {
+    return this.gamerounds
   }
 
   get allPlayers(): Player[] {

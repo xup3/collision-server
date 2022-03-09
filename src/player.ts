@@ -9,6 +9,7 @@ export default class Player {
   private health: number = 100
   private id: number
   private ready: boolean
+  public dead: boolean = false
 
   constructor(position: Vec3d, id: number, ready: boolean = false) {
     this.position = position
@@ -41,11 +42,17 @@ export default class Player {
   }
 
   get isDead(): boolean {
-    return this.currentHealth === 0
+    if (this.currentHealth <= 0) {
+      this.dead = true
+
+      return true
+    }
+
+    return false
   }
 
-  set currentHealth(hp: number) {
-    this.health = hp
+  set currentHealth(newhealth: number) {
+    this.health = newhealth
   }
 
   setDamage(damage: number) {
