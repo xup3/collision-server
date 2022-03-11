@@ -1,23 +1,27 @@
-import Player from "./player"
 import Projectile from "./projectile"
 
+type Vec3d = {
+  x: number,
+  y: number,
+  z: number
+}
 class Weapon {
   name: string
   baseDamage: number
   range: number
   ammo: number
-  owner: Player
+  position: Vec3d
 
-  constructor(name: string, baseDamage: number, range: number, ammo: number, owner: Player) {
+  constructor(name: string, baseDamage: number, range: number, ammo: number, position: Vec3d) {
     this.name = name
     this.baseDamage = baseDamage
     this.range = range
     this.ammo = ammo
-    this.owner = owner
+    this.position = position
   }
 
   fire(): Projectile {
-    return new Projectile(this.owner.currentPosition, this.baseDamage)
+    return new Projectile(this.position, this.baseDamage, 20)
   }
 }
 

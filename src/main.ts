@@ -2,6 +2,7 @@ import Game from "./game"
 import Player from "./player"
 import Playingfield from "./playingfield"
 import Server from "./server"
+import Weapon from "./weapon";
 
 const server1 = new Server();
 
@@ -20,3 +21,6 @@ server1.attachGame(game1)
 console.info(server1);
 
 server1.game?.startGame()
+
+const weapon1 = new Weapon("Pistol", 20, 200, 12, {x: 0, y: 0, z: 0})
+server1.game?.allPlayers.at(0)?.attachWeapon(weapon1)
