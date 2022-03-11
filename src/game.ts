@@ -11,6 +11,8 @@ export default class Game {
   uuid = uuidv4();
   private roundcounter: number = 0
   gamerounds: number
+  fps?: number;
+  times: number[] = [];
 
   constructor(players: Player[], playingfield: Playingfield, gamerounds: number) {
     this.players = players
@@ -18,10 +20,25 @@ export default class Game {
     this.gamerounds = gamerounds
   }
 
+  refreshLoop() {
+    requestAnimationFrame(() => {
+      const now = performance.now();
+      while (this.times.length > 0 && this.times[0] <= now - 1000) {
+        this.times.shift();
+      }
+      this.times.push(now);
+      this.fps = this.times.length;
+
+      this.refreshLoop();
+    });
+  }
+
   private loop() {
     console.info("GAME STARTED");
+    this.refreshLoop();
 
     while (this.running && this.gamerounds > 0) {
+      console.log("FPS", this.fps)
       this.roundcounter++
       console.info(`ROUND ${this.roundcounter} STARTED`);
       this.gamerounds--

@@ -21,7 +21,9 @@ class Weapon {
   }
 
   fire(): Projectile {
-    return new Projectile(this.position, this.baseDamage, 20)
+    const speed = 0.2
+
+    return new Projectile(this.position, this.baseDamage, speed)
   }
 }
 
