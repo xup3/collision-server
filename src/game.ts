@@ -18,10 +18,10 @@ export default class Game {
     this.gamerounds = gamerounds
   }
 
-  loop() {
+  private loop() {
     console.info("GAME STARTED");
 
-    while(this.running && this.gamerounds > 0) {
+    while (this.running && this.gamerounds > 0) {
       this.roundcounter++
       console.info(`ROUND ${this.roundcounter} STARTED`);
       this.gamerounds--
@@ -32,7 +32,7 @@ export default class Game {
           if (p.currentHealth - randDamage <= 0) {
             p.currentHealth = 0;
           } else {
-            p.setDamage(randDamage)
+            p.setDamage(Math.round(randDamage * 0.2))
           }
 
           p.isDead && console.info(`PLAYER ${p.playerId} JUST DIED THIS ROUND`)
@@ -49,16 +49,16 @@ export default class Game {
     }
   }
 
-  startGame(): void {
+  public startGame(): void {
     this.running = true
     this.loop();
   }
 
-  stopGame(): void {
+  public stopGame(): void {
     this.running = false;
   }
 
-  pauseGame(): void {
+  public pauseGame(): void {
     this.running = !this.running
     this.paused = !this.running
 

@@ -21,7 +21,11 @@ export default class Projectile {
     this.position = position
   }
 
-  setDamage(damage: number) {
+  public setDamage(damage: number) {
     this.damage -= damage
+  }
+
+  public move(pos: Vec3d): void {
+    this.currentPosition = pos
   }
 }

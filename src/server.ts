@@ -4,7 +4,7 @@ import Game from "./game"
 export default class Server {
   title: string
   maxPlayers: number
-  startUpTime: Date
+  startUpTime: number
   tickrate: number
   game?: Game
   uuid = uuidv4();
@@ -12,7 +12,7 @@ export default class Server {
   constructor(
     title: string = "Default Server Title",
     maxPlayers: number = 10,
-    startUpTime: Date = new Date(),
+    startUpTime: number = (new Date()).getTime(),
     tickrate: number = 128) {
     this.title = title
     this.maxPlayers = maxPlayers
@@ -22,7 +22,7 @@ export default class Server {
     console.info("SERVER STARTED")
   }
 
-  attachGame(game: Game) {
+  public attachGame(game: Game) {
     this.game = game
     console.info("GAME ATTACHED TO SERVER")
   }

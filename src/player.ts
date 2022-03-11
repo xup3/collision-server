@@ -1,3 +1,5 @@
+import Weapon from "./weapon"
+
 type Vec3d = {
   x: number
   y: number,
@@ -10,6 +12,7 @@ export default class Player {
   private id: number
   private ready: boolean
   public dead: boolean = false
+  weapon?: Weapon
 
   constructor(position: Vec3d, id: number, ready: boolean = false) {
     this.position = position
@@ -55,11 +58,16 @@ export default class Player {
     this.health = newhealth
   }
 
-  setDamage(damage: number) {
+  public setDamage(damage: number) {
     this.health -= damage
   }
 
-  hasTakenDamage(): boolean {
+  public hasTakenDamage(): boolean {
     return true
+  }
+
+  attachWeapon(weapon: Weapon): void {
+    this.weapon = weapon
+    console.info("WEAPON ATTACHED TO PLAYER")
   }
 }

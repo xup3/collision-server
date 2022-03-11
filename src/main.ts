@@ -5,9 +5,9 @@ import Server from "./server"
 
 const server1 = new Server();
 
-const amountPlayers = 10;
+const amountPlayers = 20;
 const generatedPlayers: Player[] = []
-const maxRounds = 5;
+const maxRounds = 15;
 
 for (let i = 0; i < amountPlayers; i++) {
   generatedPlayers.push(new Player({x: 10, y: 10, z: 0}, i))
