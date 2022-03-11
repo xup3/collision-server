@@ -1,7 +1,6 @@
 export default {
-  input: 'dist/main.js',
-  output: {
-    file: 'bundle.js',
-    format: 'cjs'
-  }
+  entry: 'dist/main.js',
+  dest: 'build/js/main.min.js',
+  format: 'iife',
+  sourceMap: 'inline',
 };
