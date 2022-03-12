@@ -1,65 +1,55 @@
-import { v4 as uuidv4 } from 'uuid';
-import Player from "./player"
-import Playingfield from "./playingfield"
-import { getRandomInt } from './helper';
+import { v4 as uuidv4 } from "uuid";
+import Player from "./player";
+import Playingfield from "./playingfield";
+import { getRandomInt } from "./helper";
 
 export default class Game {
-  private players: Player[]
-  private playingfield: Playingfield
-  running: boolean = false
-  paused: boolean = false
+  private players: Player[];
+  private playingfield: Playingfield;
+  running = false;
+  paused = false;
   uuid = uuidv4();
-  private roundcounter: number = 0
-  gamerounds: number
+  private roundcounter = 0;
+  gamerounds: number;
   fps?: number;
   times: number[] = [];
 
-  constructor(players: Player[], playingfield: Playingfield, gamerounds: number) {
-    this.players = players
-    this.playingfield = playingfield
-    this.gamerounds = gamerounds
-  }
-
-  refreshLoop() {
-    requestAnimationFrame(() => {
-      const now = performance.now();
-      while (this.times.length > 0 && this.times[0] <= now - 1000) {
-        this.times.shift();
-      }
-      this.times.push(now);
-      this.fps = this.times.length;
-
-      this.refreshLoop();
-    });
+  constructor(
+    players: Player[],
+    playingfield: Playingfield,
+    gamerounds: number
+  ) {
+    this.players = players;
+    this.playingfield = playingfield;
+    this.gamerounds = gamerounds;
   }
 
   private loop() {
     console.info("GAME STARTED");
-    this.refreshLoop();
 
     while (this.running && this.gamerounds > 0) {
-      console.log("FPS", this.fps)
-      this.roundcounter++
+      console.log("FPS", this.fps);
+      this.roundcounter += 1;
       console.info(`ROUND ${this.roundcounter} STARTED`);
-      this.gamerounds--
+      this.gamerounds -= 1;
 
       this.allPlayers.map((p) => {
         if (!p.isDead) {
-          const randDamage = getRandomInt(0, 100)
+          const randDamage = getRandomInt(0, 100);
           if (p.currentHealth - randDamage <= 0) {
             p.currentHealth = 0;
           } else {
-            p.setDamage(Math.round(randDamage * 0.2))
+            p.setDamage(Math.round(randDamage * 0.2));
           }
 
-          p.isDead && console.info(`PLAYER ${p.playerId} JUST DIED THIS ROUND`)
+          p.isDead && console.info(`PLAYER ${p.playerId} JUST DIED THIS ROUND`);
         }
-      })
+      });
 
-      if (this.allPlayers.every(p => p.isDead)) {
-        this.stopGame()
-        console.info("ALL PLAYER DIED, GAME STOPPED")
-        console.info(`ROUNDS PLAYED`, this.roundcounter)
+      if (this.allPlayers.every((p) => p.isDead)) {
+        this.stopGame();
+        console.info("ALL PLAYER DIED, GAME STOPPED");
+        console.info("ROUNDS PLAYED", this.roundcounter);
       }
 
       console.table(this.allPlayers);
@@ -67,7 +57,7 @@ export default class Game {
   }
 
   public startGame(): void {
-    this.running = true
+    this.running = true;
     this.loop();
   }
 
@@ -76,22 +66,22 @@ export default class Game {
   }
 
   public pauseGame(): void {
-    this.running = !this.running
-    this.paused = !this.running
+    this.running = !this.running;
+    this.paused = !this.running;
 
     console.info(this.running);
     console.info(this.paused);
   }
 
   get remainingGamerounds(): number {
-    return this.gamerounds
+    return this.gamerounds;
   }
 
   get allPlayers(): Player[] {
-    return this.players
+    return this.players;
   }
 
   get getArea(): Playingfield {
-    return this.playingfield
+    return this.playingfield;
   }
 }
