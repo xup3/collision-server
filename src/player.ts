@@ -8,16 +8,24 @@ type Vec3d = {
 
 export default class Player {
   private position: Vec3d;
-  private health: number = 100;
+  private health = 100;
   private id: number;
   private ready: boolean;
-  public dead: boolean = false;
+  public dead = false;
   weapon?: Weapon;
 
-  constructor(position: Vec3d, id: number, ready: boolean = false) {
+  constructor(position: Vec3d, id: number, ready = false) {
     this.position = position;
     this.id = id;
     this.ready = ready;
+  }
+
+  set currentHealth(newhealth: number) {
+    this.health = newhealth;
+  }
+
+  get currentHealth(): number {
+    return this.health;
   }
 
   get isReady(): boolean {
@@ -36,10 +44,6 @@ export default class Player {
     this.position = position;
   }
 
-  get currentHealth(): number {
-    return this.health;
-  }
-
   get playerId(): number {
     return this.id;
   }
@@ -52,10 +56,6 @@ export default class Player {
     }
 
     return false;
-  }
-
-  set currentHealth(newhealth: number) {
-    this.health = newhealth;
   }
 
   public setDamage(damage: number) {

@@ -11,7 +11,6 @@ export default class Game {
   uuid = uuidv4();
   private roundcounter = 0;
   gamerounds: number;
-  fps?: number;
   times: number[] = [];
 
   constructor(
@@ -28,7 +27,6 @@ export default class Game {
     console.info("GAME STARTED");
 
     while (this.running && this.gamerounds > 0) {
-      console.log("FPS", this.fps);
       this.roundcounter += 1;
       console.info(`ROUND ${this.roundcounter} STARTED`);
       this.gamerounds -= 1;
